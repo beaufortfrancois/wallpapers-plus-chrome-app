@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <style>
+      ::-webkit-scrollbar {
+        width: 0;
+      }
+      body {
+        margin: 0 auto;
+        background: #000;
+        overflow-y: overlay;
+        height: 100%;
+      }
+      #thumbs-container {
+        width: 100%;
+        color: #333;
+        text-align: center;
+        line-height: 20;
+        font-size: 16px;
+      }
+      #thumbs-container div {
+        float: left;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        border-radius: 1px;
+        width: 200px;
+        height: 150px;
+        -webkit-transition: all .2s linear;
+        cursor: pointer;
+        margin-bottom: 1px;
+        -webkit-mask-image: radial-gradient(circle, white, rgba(0,0,0,.7));
+      }
+      #thumbs-container div:hover {
+        opacity: .6;
+      }
+      #thumbs-container div:nth-child(3n+2) {
+        margin: 0 1px 1px 1px;
+      }
+      #thumbs-container .downloading {
+        opacity: .2 !important;
+      }
+      #search-panel {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: rgba(0,0,0,.6);
+        text-align: center;
+        padding: 12px 0;
+      }
+      #search-term {
+        border: 0;
+        background: transparent;
+        color: white;
+        outline: none;
+        font-size: 45;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body> 
+    <div id="thumbs-container"></div>
+    <div id="search-panel">
+    <input id="search-term" spellcheck="false"/>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
