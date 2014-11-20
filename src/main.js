@@ -33,7 +33,7 @@ function updateMessage(message) {
 function setWallpaper() {
   var thumb = this;
   var wallpaperInfo = {
-    name: 'myCustomWallpaper',
+    filename: 'myCustomWallpaper',
     layout: LAYOUTS[thumb.layoutIndex],
     url: thumb.downloadUrl,
   };
