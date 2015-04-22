@@ -12,13 +12,22 @@ function searchPhotos(searchTerm, pageToken, callback) {
       return updateMessage(chrome.runtime.lastError.message);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://www.googleapis.com/plus/v1/activities' +
-                    '?maxResults=20' + 
-                    '&pageToken=' + (pageToken || '') + 
+                    '?maxResults=20' +
+                    '&pageToken=' + (pageToken || '') +
                     '&fields=items(object(attachments(fullImage/url,image/url,objectType))),nextPageToken'+
                     '&orderBy=best&query=' + searchTerm);
     xhr.responseType = 'json';
     xhr.setRequestHeader('Authorization', 'Bearer ' + authToken);
-    xhr.onload = callback;
+    xhr.onloadend = function() {
+      if (xhr.status === 200) {
+        callback(xhr.response);
+      } else if (xhr.status === 401) {
+        // Removed cached token and try again.
+        chrome.identity.removeCachedAuthToken({ token: authToken }, function() {
+          searchPhotos(searchTerm, pageToken, callback);
+        });
+      }
+    }
     xhr.send();
   });
 }
@@ -59,28 +68,29 @@ function displayThumb(url, downloadUrl) {
   xhr.send();
 }
 
-function showPhotos(searchTerm, pageToken) {
-  if (!pageToken) {
-    photos = [];
-    updateMessage('');
-  }
-
-  searchPhotos(searchTerm, pageToken, function(xhr) { 
-    var posts = xhr.target.response.items;
+function showPhotos(searchTerm, pageToken, callback) {
+  searchPhotos(searchTerm, pageToken, function(response) {
+    if (!pageToken) {
+      photos = [];
+      updateMessage('');
+    }
+    var posts = response.items;
     for (var i = 0; i < posts.length; i++) {
       var attachment = posts[i].object.attachments[0];
       if (attachment.objectType == 'photo') {
         var thumbUrl = attachment.image.url;
         displayThumb(thumbUrl, attachment.fullImage.url);
         photos.push(thumbUrl);
-        if (photos.length >= MAX_PHOTOS)
+        if (photos.length >= MAX_PHOTOS) {
+          callback & callback();
           return;
+        }
       }
     }
-    showPhotos(searchTerm, xhr.target.response.nextPageToken);
+    showPhotos(searchTerm, response.nextPageToken, callback);
   });
 };
- 
+
 searchTermInput.addEventListener('keyup', function(event) {
   if (event.keyCode == 13) {
     chrome.storage.local.set({ searchTerm: this.value });
@@ -89,8 +99,10 @@ searchTermInput.addEventListener('keyup', function(event) {
 });
 
 chrome.storage.local.get('searchTerm', function(data) {
-  var searchTerm = data.searchTerm || 'photography';
+  var searchTerm = data.searchTerm || 'ratcliff';
   searchTermInput.value = searchTerm;
-  showPhotos(searchTerm);
-  searchTermInput.setSelectionRange(50,50);
+  showPhotos(searchTerm, null, function() {
+    searchTermInput.focus();
+    searchTermInput.setSelectionRange(50,50);
+  });
 });

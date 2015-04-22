@@ -1,9 +1,9 @@
 {
   "name": "Wallpapers+",
   "description": "Set Wallpapers from Google+",
-  "version": "1.2",
+  "version": "1.3",
   "manifest_version": 2,
-  "minimum_chrome_version": "33",
+  "minimum_chrome_version": "42",
   "app": {
     "background": {
       "scripts": [ "background.js" ]
@@ -13,6 +13,6 @@
   "permissions": [ "identity", "wallpaper", "storage" ],
   "oauth2": {
     "client_id": "388722425591-p2pqgt9emoiv2ocj94f3g3cq8muin3ak.apps.googleusercontent.com",
-    "scopes": [ "https://www.googleapis.com/auth/plus.login" ]
+    "scopes": [ "https://www.googleapis.com/auth/plus.me" ]
   }
 }
