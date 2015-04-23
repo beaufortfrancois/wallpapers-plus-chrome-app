@@ -1,9 +1,9 @@
 {
   "name": "Wallpapers+",
   "description": "Set Wallpapers from Google+",
-  "version": "1.3",
+  "version": "1.4",
   "manifest_version": 2,
-  "minimum_chrome_version": "42",
+  "minimum_chrome_version": "43",
   "app": {
     "background": {
       "scripts": [ "background.js" ]
