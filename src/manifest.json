@@ -1,7 +1,7 @@
 {
   "name": "Wallpapers+",
   "description": "Set Wallpapers from Google+",
-  "version": "1.4",
+  "version": "1.4.1",
   "manifest_version": 2,
   "minimum_chrome_version": "43",
   "app": {
@@ -12,7 +12,7 @@
   "icons": { "128": "128.png" },
   "permissions": [ "identity", "wallpaper", "storage" ],
   "oauth2": {
-    "client_id": "388722425591-come1q6aa6h1hqr5mr4rjb8l987vh189.apps.googleusercontent.com",
+    "client_id": "388722425591-p2pqgt9emoiv2ocj94f3g3cq8muin3ak.apps.googleusercontent.com",
     "scopes": [ "https://www.googleapis.com/auth/plus.me" ]
   }
 }
