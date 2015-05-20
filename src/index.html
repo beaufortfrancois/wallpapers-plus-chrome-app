@@ -39,12 +39,6 @@
       #thumbs-container .downloading {
         opacity: .2 !important;
       }
-      #search-panel {
-        position: fixed;
-        bottom: 188px;
-        width: 100%;
-        text-align: center;
-      }
       #search-term {
         border: 0;
         background: rgba(0,0,0,.6);
@@ -55,14 +49,15 @@
         border-radius: 2px;
         width: 300px;
         box-shadow: 0 1px 0 #999;
+        position: fixed;
+        bottom: 188px;
+        left: 151;
       }
     </style>
   </head>
   <body> 
     <div id="thumbs-container"></div>
-    <div id="search-panel">
     <input id="search-term" spellcheck="false"/>
-    </div>
     <script src="main.js"></script>
   </body>
 </html>
